@@ -1,3 +1,6 @@
+// Practical 5.1
+// To display marks of multiple subjects
+// Last Updated : 7th August, 2026 at 4:08pm
 #include <iostream>
 #include <iomanip>
 int main(){
