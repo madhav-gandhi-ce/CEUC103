@@ -1,4 +1,6 @@
-
+// Practical 4.3
+// To add a menu option
+// Last Updated : 10th August, 2026 at 3:07pm
 #include <iostream>
 #include <iomanip>
 int main(){
@@ -63,18 +65,37 @@ int main(){
             goto m;
         }
     case 3:
-        flag_mark=false;
         cout<<"\n------------------------------------------------\n";
         cout<<"Enter Student Marks\n";
         cout<<"------------------------------------------------\n\n"<<endl;
 
-        cout<<left<<setw(35)<<"Enter Mathematics Marks"<<": ";
+        w : cout<<left<<setw(35)<<"Enter Mathematics Marks"<<": ";
         cin>>math;
-        cout<<setw(35)<<"Enter Physics Marks"<<": ";
+        if (math<0 || math>100){
+            cout<<"Invalid Marks !\n\n";
+            goto w;
+        }
+        else{
+            flag_mark=false;
+        }
+        e : cout<<setw(35)<<"Enter Physics Marks"<<": ";
         cin>>phy;
-        cout<<setw(35)<<"Enter Programming Foundation Marks"<<": ";
+        if (phy<0 || phy>100){
+            cout<<"Invalid Marks !\n\n";
+            goto e;
+        }
+        else{
+            flag_mark=false;
+        }
+        r : cout<<setw(35)<<"Enter Programming Foundation Marks"<<": ";
         cin>>prog_foun;
-
+        if (prog_foun<0 || prog_foun>100){
+            cout<<"\nInvalid Marks !\n\n";
+            goto r;
+        }
+        else{
+            flag_mark=false;
+        }
         cout<<"\nMarks Entered Successfully.\n\n";
         cout <<"------------------------------------------------\n\n";
         goto m;
