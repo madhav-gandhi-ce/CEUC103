@@ -1,6 +1,6 @@
 // Practical 6.1
 // To display score of participants.
-// Last Updated : 15th August, 2026 at 18:31.
+// Last Updated : 15th August, 2026 at 21:56.
 
 #include <iostream>
 #include <iomanip>
