@@ -1,15 +1,20 @@
 // Practical 6.3
-// To update, delete, edit studnet details.
-// Last Updated : 23rd August, 2026 at 23:03.
+// To update, delete, edit student details.
+// Last Updated : 24th August, 2026 at 00:26.
 
 #include <iostream>
 #include <iomanip>
 int main(){
     using namespace std;
-    int num_stu;
-    string id, name, grade;
-    int sem_num, total, choice, num_sub, marks;
-    float percentage;
+    int num_stu, position, num_stu_temp, i;
+    string id[10], name[10], grade[10], id_temp, updated_grade;
+    float percentage[10], updated_percentage;
+    int sem_num, total=0, choice, num_sub, marks;
+    long long con_num;
+    bool flag_std=true;
+    bool flag_mark=true;
+    bool menu=false;
+    char reg_another_stu;
 
     cout<<"************************************************\n";
     cout<<"     STUDENT RECORD MANAGEMENT SYSTEM\n";
@@ -18,185 +23,192 @@ int main(){
     cout<<"Enter Number Of Students : ";
     cin>>num_stu;
 
+    cout<<"Enter Student Details\n\n";
     for (int i=0; i<num_stu; i++){
-        cout<<"Enter Student Details : \n\n";
         cout<<left<<setw(20)<<"Enter Enrollment ID"<<": ";
-        cin>>id;
+        cin>>id[i];
         cout<<setw(20)<<"Enter Your Name"<<": ";
         cin.ignore();
-        getline(cin, name);
+        getline(cin, name[i]);
         cout<<setw(20)<<"Enter Percentage"<<": ";
-        cin>>percentage;
+        cin>>percentage[i];
         cout<<setw(20)<<"Enter Grade"<<": ";
-        cin>>grade;
-    }
-
-    for (int i=0; i<num_stu; i++){
-        cout<<setw(10)<<id;
-        cout<<setw(15)<<name;
-        cout<<setw(6)<<percentage;
-        cout<<grade;
+        cin>>grade[i];
         cout<<endl;
     }
 
     cout<<"\n------------------------------------------------\n";
     cout<<"Current Student Records\n\n";
+    for (int i=0; i<num_stu; i++){
+        cout<<setw(10)<<id[i];
+        cout<<setw(15)<<name[i];
+        cout<<setw(6)<<percentage[i];
+        cout<<grade[i];
+        cout<<endl;
+    }
+    cout<<"\n------------------------------------------------\n\n";
 
 
 
-    // m : cout<<"-------------------MAIN MENU--------------------\n\n\n";
 
-    // cout<<"1. Register New Student\n2. Display Student Record\n3. Enter Student Marks\n4. Display Academic Result\n5. Exit\n\n";
+    m : cout<<"-------------------MAIN MENU--------------------\n\n\n";
 
-    // cout<<"Enter Your Choice : ";
-    // cin>>choice;
-    // switch(choice)
-    // {
-    // case 1:
-    //     flag_std=false;
-    //     cout<<"\n------------------------------------------------\n";
-    //     cout<<"Student Registration\n";
-    //     cout<<"------------------------------------------------\n\n"<<endl;
-    //     reg_another_stu = 'Y';
-    //     while(reg_another_stu=='Y'){
-    //             cout<<endl;
-    //         cout<<left<<setw(20)<<"Enter Enrollment ID"<<": ";
-    //         cin>>id;
-    //         cout<<setw(20)<<"Enter Your Name"<<": ";
-    //         cin.ignore();
-    //         getline(cin, name);
-    //         cout<<setw(20)<<"Enter Branch Name"<<": ";
-    //         getline(cin, branch);
-    //         cout<<setw(20)<<"Enter Semester No."<<": ";
-    //         cin>>sem_num;
-    //         cout<<setw(20)<<"Enter Contact No."<<": ";
-    //         cin>>con_num;
-    //         cout<<"\n";
-    //         cout<<"Student Registered Successfully.\n\n";
-    //         cout <<"------------------------------------------------\n\n";
-    //         q : cout<<"Register another student? (Y/N) : ";
-    //         cin>>reg_another_stu;
-    //         cout<<endl;
-    //         if (reg_another_stu=='N'){
-    //             cout<<"Returning to Main Menu...\n\n";
-    //            // goto m;
-    //         }
-    //         else if (reg_another_stu != 'Y'){
-    //             cout<<"Invalid input, try again!\n\n";
-    //             goto q;
-    //         }
+    cout<<"1. Insert New Student\n2. Update Student Records\n3. Delete Student Record\n4. Exit\n\n";
 
-    //     }
+    cout<<"Enter Your Choice : ";
+    cin>>choice;
+    switch(choice)
+    {
+    case 1:
+        cout<<"Enter Position : ";
+        cin>>position;
+        num_stu_temp = num_stu;
+        position--;
+        for (int i = num_stu; i > position; i--) {
+            id[i] = id[i - 1];
+            name[i] = name[i - 1];
+            grade[i] = grade[i - 1];
+            percentage[i] = percentage[i - 1];
+        }
 
-    //     goto m;
+        cout<<left<<setw(20)<<"Enter Enrollment ID"<<": ";
+        cin>>id[position];
+        cout<<setw(20)<<"Enter Your Name"<<": ";
+        cin.ignore();
+        getline(cin, name[position]);
+        cout<<setw(20)<<"Enter Percentage"<<": ";
+        cin>>percentage[position];
+        cout<<setw(20)<<"Enter Grade"<<": ";
+        cin>>grade[position];
+        num_stu++;
+        cout<<endl;
+        cout<<endl;
+        cout<<"Record Inserted Successfully.";
+        
+        cout<<endl;
+        cout<<"\n------------------------------------------------\n";
+        cout<<"Updated Student Record\n\n";
+        for (int i=0; i<num_stu; i++){
+            cout<<setw(10)<<id[i];
+            cout<<setw(15)<<name[i];
+            cout<<setw(6)<<percentage[i];
+            cout<<grade[i];
+            cout<<endl;
+        }
+        cout<<"\n------------------------------------------------\n\n";
+        goto m;
 
-    // case 2:
-    //     if (flag_std==true){
-    //         cout<<"\nRegister new student first to display!\n\n";
-    //         goto m;
-    //     }
-    //     else{
-    //         cout<<"\n\n------------------------------------------------\n";
-    //         cout<<"Student Information\n";
-    //         cout<<"------------------------------------------------\n\n"<<endl;
+    case 2:
+        cout<<"\n\n------------------------------------------------\n";
+        cout<<"Update Student Record\n\n";
+        cout<<"Enter Enrollment Number : ";
+        cin>>id_temp;
+        for (i=0; i<num_stu; i++){
+            if (id[i]==id_temp){
+                break;
+            }
+        }
+        cout<<"Enter New Percentage : ";
+        cin>>updated_percentage;
+        percentage[i] = updated_percentage;
+        cout<<"Enter New Grade : ";
+        cin>>updated_grade;
+        grade[i] = updated_grade;
 
-    //         cout << setw(15) <<"Enrollment ID"<<": "<<id<<endl;
-    //         cout << setw(15) <<"Name"<<": "<<name<<endl;
-    //         cout << setw(15) <<"Branch"<<": "<<branch<<endl;
-    //         cout << setw(15) <<"Semester"<<": "<<sem_num<<endl;
-    //         cout << setw(15) <<"Contact No."<<": "<<con_num<<endl<<endl;
-    //         cout <<"------------------------------------------------\n\n";
-    //         goto m;
-    //     }
+        cout<<endl;
+        cout<<endl;
+        cout<<"Record Updated Successfully.";
+        
+        cout<<endl;
+        cout<<"\n------------------------------------------------\n";
+        cout<<"Updated Student Record\n\n";
+        for (int i=0; i<num_stu; i++){
+            cout<<setw(10)<<id[i];
+            cout<<setw(15)<<name[i];
+            cout<<setw(6)<<percentage[i];
+            cout<<grade[i];
+            cout<<endl;
+        }
+        cout<<"\n------------------------------------------------\n\n";
+        goto m;
+    
+
+
+    case 3:
+        cout << "\nDelete Student Record\n\n";
+
+        cout << "Enter Position : ";
+        cin >> position;
+
+        // Convert position to array index
+        position--;
+
+        // Shift all records after deleted record one position to the left
+        for (int i = position; i < num_stu - 1; i++) {
+            id[i] = id[i + 1];
+            name[i] = name[i + 1];
+            grade[i] = grade[i + 1];
+            percentage[i] = percentage[i + 1];
+        }
+
+        // Decrease number of students
+        num_stu--;
+
+        cout << endl;
+        cout << "Record Deleted Successfully.";
+        cout << endl;
+
+        cout << "\n------------------------------------------------\n";
+        cout << "Final Student Records\n\n";
+
+        for (int i = 0; i < num_stu; i++) {
+            cout << setw(10) << id[i];
+            cout << setw(15) << name[i];
+            cout << setw(6) << percentage[i];
+            cout << grade[i];
+            cout << endl;
+        }
+
+        cout << "\n------------------------------------------------\n\n";
+
+        goto m;
+
     // case 3:
-    //     flag_mark=false;
+    //     cout<<"\nDelete Student Record\n\n";
+    //     cout<<"Enter Position : ";
+    //     cin>>position;
+    //     num_stu_temp = num_stu;
+    //     for (int i=position-1; i<num_stu, num_stu_temp>position-1; i++, num_stu_temp--){
+    //         id[num_stu_temp-2] = id[num_stu_temp-1];
+    //         name[num_stu_temp-2] = name[num_stu_temp-1];
+    //         grade[num_stu_temp-2] = grade[num_stu_temp-1];
+    //         percentage[num_stu_temp-2] = percentage[num_stu_temp-1];
+    //     }
+
+    //     cout<<endl;
+    //     cout<<endl;
+    //     cout<<"Record Deleted Successfully.";
+        
+    //     cout<<endl;
     //     cout<<"\n------------------------------------------------\n";
-    //     cout<<"Enter Student Marks\n";
-    //     cout<<"------------------------------------------------\n\n"<<endl;
-
-    //     cout<<"Enter number of subjects : ";
-    //     cin>>num_sub;
-    //     for (int i=1; i<=num_sub; i++){
-    //         t : cout<<"Enter marks of subject "<<right<<setw(2)<<i;
-    //         cout<<" : ";
-    //         cin>>marks;
-    //         if (marks<0 || marks>100){
-    //             cout<<"Invalid Marks, try again!\n\n";
-    //             goto t;
-    //         }
-    //         else {
-    //             cout<<endl;
-    //             total = total+marks;
-    //         }
+    //     cout<<"Final Student Records\n\n";
+    //     for (int i=0; i<num_stu; i++){
+    //         cout<<setw(10)<<id[i];
+    //         cout<<setw(15)<<name[i];
+    //         cout<<setw(6)<<percentage[i];
+    //         cout<<grade[i];
+    //         cout<<endl;
     //     }
-
-    //     cout<<"\nMarks Entered Successfully.\n\n";
-    //     cout <<"------------------------------------------------\n\n";
+    //     cout<<"\n------------------------------------------------\n\n";
     //     goto m;
 
-    // case 4:
-    //     if (flag_mark==true){
-    //         cout<<"\nEnter Students Marks first!\n\n";
-    //         goto m;
-    //     }
-    //     else{
-
-    //         avg=((float)total)/num_sub;
-    //         percentage=((float)total)/num_sub;
-    //         cout<<"\n\n------------------------------------------------\n";
-    //         cout<<"Academic Result\n";
-    //         cout<<"------------------------------------------------\n\n"<<endl;
-
-    //         cout<<left<<setw(15)<<"Total Marks"<<": "<<total<<endl;
-    //         cout<<setw(15)<<"Average Marks"<<": "<<fixed<<setprecision(2)<<avg<<endl;
-    //         cout<<setw(15)<<"Percentage"<<": "<<fixed<<setprecision(2)<<percentage<<"%"<<endl<<endl;
-
-
-    //         if (percentage>=40){
-    //             cout<<left<<setw(15)<<"Result"<<": PASS"<<endl;
-    //         }
-    //         else {
-    //             cout<<setw(15)<<"Result"<<": FAIL"<<endl;
-    //         }
-
-    //         if (percentage>=90){
-    //             cout<<setw(15)<<"Grade"<<": O"<<endl;
-    //             cout<<setw(15)<<"Perfomance"<<": Outstanding"<<endl;
-    //         }
-    //         else if (percentage>=80){
-    //             cout<<setw(15)<<"Grade"<<": A+"<<endl;
-    //             cout<<setw(15)<<"Perfomance"<<": Excellent"<<endl;
-    //         }
-    //         else if (percentage>=70){
-    //             cout<<setw(15)<<"Grade"<<": A"<<endl;
-    //             cout<<setw(15)<<"Perfomance"<<": Very Good"<<endl;
-    //         }
-    //         else if (percentage>=60){
-    //             cout<<setw(15)<<"Grade"<<": B+"<<endl;
-    //             cout<<setw(15)<<"Perfomance"<<": Good"<<endl;
-    //         }
-    //         else if (percentage>=50){
-    //             cout<<setw(15)<<"Grade"<<": B"<<endl;
-    //             cout<<setw(15)<<"Perfomance"<<": Satisfactory"<<endl;
-    //         }
-    //         else if (percentage>=40){
-    //             cout<<setw(15)<<"Grade"<<": C"<<endl;
-    //             cout<<setw(15)<<"Perfomance"<<": Needs Improvement"<<endl;
-    //         }
-    //         else if (percentage<40){
-    //             cout<<setw(15)<<"Grade"<<": F"<<endl;
-    //             cout<<setw(15)<<"Perfomance"<<": Failed"<<endl;
-    //         }
-    //         cout<<"\n\n";
-    //         goto m;
-    //     }
-    // case 5:
-    //     cout<<"Thank You...";
-    //     exit(0);
-    // default:
-    //     cout<<"\nInvalid Choice!\n\n";
-    //     goto m;
-    // }
+    case 4:
+        cout<<"Thank You...";
+        exit(0);
+    default:
+        cout<<"\nInvalid Choice!\n\n";
+        goto m;
+    }
 
 
 }
