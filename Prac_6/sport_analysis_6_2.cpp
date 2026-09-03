@@ -1,18 +1,16 @@
 // Practical 6.2
 // To search and get ranking of the participants.
-// Last Updated : 21th August, 2026 at 15:58.
+// Last Updated : 3rd September, 2026 at 21:30.
 
 #include <iostream>
 #include <iomanip>
 using namespace std;
 int main(){
-
-    int num_part, i, j, total_score=0;
-    int temp;
+    int num_part, i, total_score=0, lowest_score, highest_score, j, temp;
     string temp1;
-    int score[10];
-    string part_name[15], part_id[10], id;
-
+    bool found=false;
+    int score[20];
+    string part_name[70], part_id[10], id;
     cout<<"********************************************\n";
     cout<<"     SPORTS EVENT SCORE ANALYSIS\n";
     cout<<"********************************************\n\n";
@@ -21,9 +19,10 @@ int main(){
     cin>>num_part;
     cout<<endl;
     if (num_part <= 0) {
-        cout << "Number of participants must be greater than 0.\n\n";
+        cout << "Number of participants must be greater than 0.";
         goto m;
     }
+
 
     for (i=0; i<num_part; i++){
         cout<<left<<setw(29)<<"Enter Participant ID"<<": ";
@@ -35,6 +34,31 @@ int main(){
         total_score += score[i];
         cout<<endl;
     }
+
+    cout<<"Search Participant";
+    n : cout<<"\nEnter Participant ID : ";
+    cin>>id;
+    cout<<endl;
+    for (i=0; i<num_part; i++){
+        if (id == part_id[i]){
+            cout<<"--------------------------------------\n";
+            cout<<"         Participant Found\n";
+            cout<<"--------------------------------------\n\n";
+            cout<<left<<setw(6)<<"ID"<<" : "<<part_id[i];
+            cout<<endl;
+            cout<<setw(6)<<"Name"<<" : "<<part_name[i];
+            cout<<endl;
+            cout<<setw(6)<<"Score"<<" : "<<score[i];
+            cout<<endl;
+            found=true;
+            }
+    }
+    if (found==false){
+        cout<<"Participant ID not found!\n";
+        goto n;
+    }
+
+
     cout<<endl;
     cout<<"--------------------------------------\n";
     cout<<"         Ranking List\n";
@@ -43,8 +67,8 @@ int main(){
     cout<<setw(6)<<"Name";
     cout<<setw(6)<<"Score";
     cout<<endl;
-    for (i=0; i<num_part; i++){
-        for (j=0; j<num_part-i; j++){
+    for (i=0; i<num_part-1; i++){
+        for (j=0; j<num_part-i-1; j++){
             if (score[j]<score[j+1]){
                 temp = score[j];
                 score[j] = score[j+1];
@@ -56,31 +80,29 @@ int main(){
         }
     }
     for (i=0; i<num_part; i++){
-        cout<<left<<setw(5)<<i+1;
-        cout<<setw(6)<<part_name[i+1];
-        cout<<setw(6)<<score[i+1];
+        cout<<left<<setw(3)<<i+1;
+        cout<<setw(6)<<part_name[i];
+        cout<<setw(6)<<score[i];
         cout<<endl;
     }
-    cout<<"--------------------------------------\n\n";
-    cout<<"Top Three Performers\n";
+    cout<<"\n--------------------------------------\n\n";
+    cout<<"Top Performers\n";
     if (num_part<3){
         for (i=0; i<num_part; i++){
-        cout<<i+1<<". "<<left<<setw(6)<<part_name[i+1];
+        cout<<i+1<<". "<<left<<setw(6)<<part_name[i];
         cout<<" - ";
-        cout<<score[i+1]<<endl;
+        cout<<score[i]<<endl;
         }
     }
     else{
         for (i=0; i<3; i++){
-            cout<<i+1<<". "<<left<<setw(6)<<part_name[i+1];
+            cout<<i+1<<". "<<left<<setw(6)<<part_name[i];
             cout<<" - ";
-            cout<<score[i+1]<<endl;
+            cout<<score[i]<<endl;
         }
     }
+
 }
-
-
-
 
 
 
