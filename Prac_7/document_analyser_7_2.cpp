@@ -1,6 +1,6 @@
 // Practical 7.2
 // Use strings
-// Last updated on 7th September, 2026
+// Last updated on 18th September, 2026
 
 #include <iostream>
 #include <cstring>
