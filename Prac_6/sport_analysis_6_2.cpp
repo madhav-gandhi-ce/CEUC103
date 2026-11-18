@@ -1,108 +1,123 @@
 // Practical 6.2
 // To search and get ranking of the participants.
-// Last Updated : 3rd September, 2026 at 21:30.
+// Last Updated : 23rd October, 2026 at 11:06.
 
 #include <iostream>
 #include <iomanip>
 using namespace std;
 int main(){
-    int num_part, i, total_score=0, lowest_score, highest_score, j, temp;
-    string temp1;
-    bool found=false;
-    int score[20];
-    string part_name[70], part_id[10], id;
+    short int i, j, k, num_part, temp;
+    bool found=true;
+    
     cout<<"********************************************\n";
-    cout<<"     SPORTS EVENT SCORE ANALYSIS\n";
+    cout<<"SPORTS EVENT SCORE ANALYSIS\n";
     cout<<"********************************************\n\n";
 
-    m : cout<<left<<setw(29)<<"Enter Number of Participants"<<": ";
+    // Taking number of participants as input
+    n : cout<<"Enter Number of Participants : ";
     cin>>num_part;
-    cout<<endl;
-    if (num_part <= 0) {
-        cout << "Number of participants must be greater than 0.";
-        goto m;
+    if (num_part<=0){
+        cout<<"Number of participants are invalid!\n\n";
+        goto n;
     }
-
-
+    
+    short int score[num_part];   
+    char id[num_part][5], name[num_part][20], search_id[5];
+    
+    // Taking Particpant's Info as input
+    cin.ignore();
     for (i=0; i<num_part; i++){
-        cout<<left<<setw(29)<<"Enter Participant ID"<<": ";
-        cin>>part_id[i];
-        cout<<setw(29)<<"Enter Participant Name"<<": ";
-        cin>>part_name[i];
-        cout<<setw(29)<<"Enter Score"<<": ";
+        cout<<left<<setw(23)<<"Enter Participant ID"<<" : ";
+        cin.getline(id[i], 5);
+
+        cout<<setw(23)<<"Enter Participant Name"<<" : ";
+        cin.getline(name[i], 20);
+
+        s : cout<<setw(23)<<"Enter Score"<<" : ";
         cin>>score[i];
-        total_score += score[i];
+        if (score[i]<0 || score[i]>100){
+            cout<<"Enter valid score!\n\n";
+            goto s;
+        }
+        cin.ignore();
         cout<<endl;
     }
 
-    cout<<"Search Participant";
-    n : cout<<"\nEnter Participant ID : ";
-    cin>>id;
-    cout<<endl;
+    cout<<"Search Participant\n";
+    cout<<"Enter Participant ID : ";
+    cin>>search_id;
+    
     for (i=0; i<num_part; i++){
-        if (id == part_id[i]){
-            cout<<"--------------------------------------\n";
-            cout<<"         Participant Found\n";
-            cout<<"--------------------------------------\n\n";
-            cout<<left<<setw(6)<<"ID"<<" : "<<part_id[i];
-            cout<<endl;
-            cout<<setw(6)<<"Name"<<" : "<<part_name[i];
-            cout<<endl;
-            cout<<setw(6)<<"Score"<<" : "<<score[i];
-            cout<<endl;
-            found=true;
+        for (j=0; j<4; j++){
+            if (id[i][j]!=search_id[j]){
+                j=4;
+                found = false;
             }
-    }
-    if (found==false){
-        cout<<"Participant ID not found!\n";
-        goto n;
-    }
-
-
-    cout<<endl;
-    cout<<"--------------------------------------\n";
-    cout<<"         Ranking List\n";
-    cout<<"--------------------------------------\n\n";
-    cout<<left<<setw(5)<<"Rank";
-    cout<<setw(6)<<"Name";
-    cout<<setw(6)<<"Score";
-    cout<<endl;
-    for (i=0; i<num_part-1; i++){
-        for (j=0; j<num_part-i-1; j++){
-            if (score[j]<score[j+1]){
-                temp = score[j];
-                score[j] = score[j+1];
-                score[j+1] = temp;
-                temp1 = part_name[j];
-                part_name[j] = part_name[j+1];
-                part_name[j+1] = temp1;
+            else{
+                found = true;
+                if (j==3){
+                    j=i;
+                    i=num_part;
+                    break;
+                }
             }
         }
     }
+
+    if (found == false){
+        cout<<"Not found!\n";
+    }
+    else {
+        cout<<"--------------------------------------\n";
+        cout<<"\tParticipant Found\n";
+        cout<<"--------------------------------------\n\n";
+        cout<<left<<setw(6)<<"ID"<<" : "<<id[j]<<endl;
+        cout<<setw(6)<<"Name"<<" : "<<name[j]<<endl;
+        cout<<setw(6)<<"Score"<<" : "<<score[j]<<endl<<endl;
+    }
+
+    char temp_name[20];
+    cout<<"\n--------------------------------------\n";
+    cout<<"\tRanking List\n";
+    cout<<"--------------------------------------\n\n";
+
     for (i=0; i<num_part; i++){
-        cout<<left<<setw(3)<<i+1;
-        cout<<setw(6)<<part_name[i];
-        cout<<setw(6)<<score[i];
+        for (j=num_part-1; j>i; j--){
+            if (score[j-1]<score[j]){
+                temp = score[j-1];
+                score[j-1] = score[j];
+                score[j] = temp;
+
+                for (k=0; k<20; k++){
+                    temp_name[k] = name[j-1][k];
+                    name[j-1][k] = name[j][k];
+                    name[j][k] = temp_name[k];
+                }
+            }
+        }
+    }
+
+    cout<<left<<setw(7)<<"Rank";
+    cout<<setw(10)<<"Name";
+    cout<<setw(6)<<"Score"<<endl;
+
+    for (i=0; i<num_part; i++){
+        cout<<" "<<left<<setw(6)<<i+1;
+        cout<<setw(10)<<name[i];
+        cout<<" "<<setw(6)<<score[i];
         cout<<endl;
     }
-    cout<<"\n--------------------------------------\n\n";
+    cout<<"--------------------------------------\n\n";
     cout<<"Top Performers\n";
     if (num_part<3){
         for (i=0; i<num_part; i++){
-        cout<<i+1<<". "<<left<<setw(6)<<part_name[i];
-        cout<<" - ";
-        cout<<score[i]<<endl;
+            cout<<i+1<<" "<<name[i]<<" - "<<score[i]<<endl;
         }
     }
-    else{
+    else {
         for (i=0; i<3; i++){
-            cout<<i+1<<". "<<left<<setw(6)<<part_name[i];
-            cout<<" - ";
-            cout<<score[i]<<endl;
+            cout<<i+1<<" "<<name[i]<<" - "<<score[i]<<endl;
         }
     }
-
+    cout<<"\n--------------------------------------";
 }
-
-
-
