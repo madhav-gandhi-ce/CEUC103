@@ -1,74 +1,81 @@
 // Practical 6.1
 // To display score of participants.
-// Last Updated : 15th August, 2026 at 21:56.
+// Last Updated : 23rd October, 2026 at 11:06.
 
 #include <iostream>
 #include <iomanip>
 using namespace std;
 int main(){
-    int num_part, i, total_score=0, lowest_score, highest_score;
+    short int i, num_part, total_score=0, lowest, highest;
+    float avg_score;
     cout<<"********************************************\n";
-    cout<<"     SPORTS EVENT SCORE ANALYSIS\n";
+    cout<<"SPORTS EVENT SCORE ANALYSIS\n";
     cout<<"********************************************\n\n";
 
-    m : cout<<left<<setw(29)<<"Enter Number of Participants"<<": ";
+    // Taking number of participants as input
+    n : cout<<"Enter Number of Participants : ";
     cin>>num_part;
-    if (num_part <= 0) {
-        cout << "Number of participants must be greater than 0.";
-        goto m;
+    if (num_part<=0){
+        cout<<"Number of participants are invalid!\n\n";
+        goto n;
     }
-
-    int score[num_part];
-    string part_name[num_part], part_id[num_part];
-
-    for (i=0; i<num_part; i++){
-        cout<<left<<setw(29)<<"Enter Participant ID"<<": ";
-        cin>>part_id[i];
-        cout<<setw(29)<<"Enter Participant Name"<<": ";
-        cin>>part_name[i];
-        cout<<setw(29)<<"Enter Score"<<": ";
-        cin>>score[i];
-        total_score += score[i];
-    }
-
-    cout<<endl<<endl;
-
-    cout<<"----------------------------------------------\n";
-    cout<<"         Participant Perfomance\n";
-    cout<<"----------------------------------------------\n\n";
-
     
-    cout<<left<<setw(6)<<" ID ";
-    cout<<setw(11)<<" Name ";
-    cout<<setw(3)<<" Score "<<endl;
-    cout<<"----------------------------------------------\n";
+    short int score[num_part];   
+    char id[num_part][5], name[num_part][20];
+    
+    // Taking Particpant's Info as input
+    
+    cin.ignore();
     for (i=0; i<num_part; i++){
-        cout<<left<<setw(6)<<part_id[i]<<" ";
-        cout<<setw(11)<<part_name[i]<<" ";
-        cout<<setw(3)<<score[i]<<" ";
+        cout<<left<<setw(23)<<"Enter Participant ID"<<" : ";
+        cin.getline(id[i], 5);
+
+        cout<<setw(23)<<"Enter Participant Name"<<" : ";
+        cin.getline(name[i], 20);
+
+        s : cout<<setw(23)<<"Enter Score"<<" : ";
+        cin>>score[i];
+        if (score[i]<0 || score[i]>100){
+            cout<<"Enter valid score!\n\n";
+            goto s;
+        }
+
+        total_score += score[i];
+
+        cin.ignore();
         cout<<endl;
+
     }
+
+    cout<<"\n----------------------------------------------\n";
+    cout<<"Participant Perfomance\n";
     cout<<"----------------------------------------------\n\n";
+    
+    cout<<setw(5)<<"  ID";
+    cout<<setw(10)<<"   Name";
+    cout<<setw(6)<<" Score";
+    cout<<"\n----------------------------------------------\n";
+    for (i=0; i<num_part; i++){
+        cout<<" "<<left<<setw(5)<<id[i];
+        cout<<"  "<<setw(10)<<name[i];
+        cout<<setw(6)<<score[i]<<endl;
+    }
+    cout<<"\n----------------------------------------------\n\n";
 
+    avg_score = (float)total_score/num_part;
+    cout<<left<<setw(14)<<"Total Score"<<" : "<<total_score<<endl;
+    cout<<setw(14)<<"Average Score"<<" : "<<fixed<<setprecision(2)<<avg_score<<endl;
 
-    cout<<left<<setw(14)<<"Total Score"<<" : "<<total_score;
-    cout<<endl;
-    cout<<left<<setw(14)<<"Average Score"<<" : "<<fixed << setprecision(2)<<(double)(total_score)/num_part;
-    cout<<endl;
-    lowest_score = score[0];
-    for (i=1; i<num_part; i++){
-        if (lowest_score>score[i]){
-            lowest_score = score[i];
+    lowest = score[0];
+    highest = score[0];
+    for (i=0; i<num_part; i++){
+        if (lowest>score[i]){
+            lowest = score[i];
+        }
+        if (highest<score[i]){
+            highest = score[i];
         }
     }
-    cout<<left<<setw(14)<<"Lowest Score"<<" : "<<lowest_score;
-    cout<<endl;
-    highest_score = score[0];
-    for (i=1; i<num_part; i++){
-        if (highest_score<score[i]){
-            highest_score = score[i];
-        }
-    }
-    cout<<left<<setw(14)<<"Highest Score"<<" : "<<highest_score;
-
+    cout<<setw(14)<<"Highest Score"<<" : "<<highest<<endl;
+    cout<<setw(14)<<"Lowest Score"<<" : "<<lowest<<endl;
 }
