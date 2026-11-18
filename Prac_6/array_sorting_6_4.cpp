@@ -1,125 +1,97 @@
 // Practical 6.4
 // To multiply matrix and sort and merge arrays.
-// Last Updated : 7th September, 2026 at 07:35.
+// Last Updated : 29th October, 2026 at 12:22.
 
 #include <iostream>
 #include <iomanip>
 using namespace std;
 int main(){
-    int matrix_1[3][3];
-    int matrix_2[3][3];
-    int result[3][3], sum=0, i, j, k;
-    int arr_1[5];
-    int arr_2[5];
-    int merged_arr[10];
-    // cout<<"Part A - Matrix Multiplication\n";
-    // cout<<"********************************************\n";
-    // cout<<"\tMATRIX MULTIPLICATION\n";
-    // cout<<"********************************************\n";
-
-    // cout<<"Enter first matrix : \n";
-    // for (i=0; i<3; i++){
-    //     for (j=0; j<3; j++){
-    //         cin>>matrix_1[i][j];
-    //     }
-    // }
-    // cout<<endl;
-    // cout<<"Enter second matrix : \n";
-    // for (i=0; i<3; i++){
-    //     for (j=0; j<3; j++){
-    //         cin>>matrix_2[i][j];
-    //     }
-    // }
-    // cout<<endl;
-    // cout<<"First matrix : \n\n";
-    // for (i=0; i<3; i++){
-    //     for (j=0; j<3; j++){
-    //         cout<<left<<setw(2)<<matrix_1[i][j]<<" ";
-    //     }
-    //     cout<<endl;
-    // }
-    // cout<<endl;
-    // cout<<"Second matrix : \n\n";
-    // for (i=0; i<3; i++){
-    //     for (j=0; j<3; j++){
-    //         cout<<left<<setw(2)<<matrix_2[i][j]<<" ";
-    //     }
-    //     cout<<endl;
-    // }
-
-    // // for (i=0; i<3; i++){
-    // //     for (j=0; j<3; j++){
-    // //         for (k=0; k<3; k++){
-    // //             sum = sum + (matrix_1[i][j])*(matrix_2[j][i]);
-    // //         }
-    // //     }
-    // //     result[i][j] = sum;
-    // //     sum = 0;
-    // // }
-
-    // for (i=0; i<3; i++){
-    //     for (j=0; j<3; j++){
-    //         sum=0;
-    //         for (k=0; k<3; k++){
-    //             sum=sum+matrix_1[i][k]*matrix_2[k][j];
-    //         }
-    //         result[i][j]=sum;
-    //     }
-    // }
-    // cout<<endl;
-    // cout<<"------------------------------------------\n\n";
-    // cout<<"Resultant Matrix : \n\n";
-    // for (i=0; i<3; i++){
-    //     for (j=0; j<3; j++){
-    //         cout<<left<<setw(3)<<result[i][j]<<" ";
-    //     }
-    //     cout<<endl;
-    // }
-    // cout<<endl;
-    // cout<<"------------------------------------------";
-
-    cout<<"Part B - Merge Two Sorted Arrays\n";
+    cout<<"Part A - Matrix Multiplication\n";
     cout<<"********************************************\n";
-    cout<<"\tMERGE SORTED ARRAYS\n";
-    cout<<"********************************************\n";
+    cout<<"\tMATRIX MULTIPLICATION\n";
+    cout<<"********************************************\n\n";
 
-    cout<<"Enter First Array :\n";
-    for (i=0; i<5; i++){
-        cin>>arr_1[i];
-    }
-    cout<<"Enter Second Array :\n";
-    for (i=0; i<5; i++){
-        cin>>arr_2[i];
+    int matrix_1[3][3], matrix_2[3][3], matrix_result[3][3] = {0}, i, j, k;
+    cout<<"Enter First Matrix\n\n";
+    for (i=0; i<3; i++){
+        for (j=0; j<3; j++){
+            cin>>matrix_1[i][j];
+        } 
     }
     cout<<endl;
 
-    // for (i=0, j=0; i<10; i=i+2){
-    //     if (j<5){
-    //         if (arr_1[j]<arr_2[j]){
-    //             merged_arr[i] = arr_1[j];
-    //             merged_arr[i+1] = arr_2[j];
-    //             j++;
-    //         }
-    //         else{
-    //             merged_arr[i] = arr_2[j];
-    //             merged_arr[i+1] = arr_1[j];
-    //             j++;
-    //         }
-    //     }
-    // }
-    // int len;
-    // for (i=0; arr_1[i]!='\0'; i++){
-    //     merged_arr[i] = arr_1[i];
-    // }
-    // len=i-3;
-    // cout<<"Length is : "<<len;
-    // cout<<endl;
-    // for (i=0; arr_2[i]!='\0'; i++){
-    //     merged_arr[len] = arr_2[i];
-    //     len++;
-    // }
-    int temp;
-    for (i=0; i<10; i++){
+    cout<<"\nEnter Second Matrix\n\n";
+    for (i=0; i<3; i++){
+        for (j=0; j<3; j++){
+            cin>>matrix_2[i][j];
+        }
+    }
+    cout<<endl;
+
+
+    cout<<"First Matrix\n\n";
+    for (i=0; i<3; i++){
+        for (j=0; j<3; j++){
+            cout<<matrix_1[i][j]<<" ";
+        } 
+        cout<<endl;
+    }
+
+    cout<<"\nSecond Matrix\n\n";
+    for (i=0; i<3; i++){
+        for (j=0; j<3; j++){
+            cout<<matrix_2[i][j]<<" ";
+        } 
+        cout<<endl;
+    }
+    cout<<endl;
+
+    
+    for (i=0; i<3; i++){
+        for (k=0; k<3; k++){
+            for (j=0; j<3; j++){
+                matrix_result[i][k] = matrix_result[i][k] + matrix_1[i][j]*matrix_2[j][k];
+            }
+        }
+    }
+    
+    cout<<"------------------------------------------\n";
+    cout<<"\nResultant Matrix\n\n";
+    for (i=0; i<3; i++){
+        for (j=0; j<3; j++){
+            cout<<left<<setw(2)<<matrix_result[i][j]<<" ";
+        } 
+        cout<<endl;
+    }
+    cout<<"\n------------------------------------------\n";
+
+
+
+    cout<<"Part B - Merge Sorted Array\n";
+    cout<<"********************************************\n";
+    cout<<"\tMERGED SORTED ARRAYS\n";
+    cout<<"********************************************\n\n";
+
+    int arr_1[5], arr_2[5], merged_arr[10], i, j, temp;
+    cout<<"Enter First Array : ";
+    for (i=0; i<5; i++){
+        cin>>arr_1[i];
+    }
+    cout<<endl<<endl;
+    cout<<"Enter Second Array : ";
+    for (i=0; i<5; i++){
+        cin>>arr_2[i];
+    }
+    cout<<endl<<endl;
+
+    for (i=0; i<5; i++){
+        merged_arr[i] = arr_1[i];
+    }
+    for (i=0; i<5; i++){
+        merged_arr[i+5] = arr_2[i];
+    }
+
+    for (i=0; i<9; i++){
         for (j=0; j<9-i; j++){
             if (merged_arr[j]>merged_arr[j+1]){
                 temp = merged_arr[j];
@@ -128,31 +100,10 @@ int main(){
             }
         }
     }
-    
-    
+    cout<<"\n------------------------------------------\n\n";
 
-    cout<<"First Array :\n";
-    for (i=0; i<5; i++){
-        cout<<arr_1[i]<<" ";
-    }
-    cout<<endl;
-    cout<<endl;
-    cout<<"Second Array :\n";
-    for (i=0; i<5; i++){
-        cout<<arr_2[i]<<" ";
-    }
-    cout<<endl;
-    cout<<endl;
-    cout<<"Merged Array :\n";
+    cout<<"Merged Sorted Array\n\n";
     for (i=0; i<10; i++){
         cout<<merged_arr[i]<<" ";
     }
-    
-
 }
-
-
-
-
-
-
