@@ -1,251 +1,248 @@
 // Practical 6.3
 // To update, delete, edit student details.
-// Last Updated : 7th September, 2026 at 07:33.
+// Last Updated : 29th October, 2026 at 01:21.
 
 #include <iostream>
 #include <iomanip>
-#include <string>
-#include <cstdlib>
+using namespace std;
 int main(){
-    using namespace std;
-    int num_stu, position, i;
-    string id[10], name[10], grade[10], id_temp;
-    float percentage[10], updated_percentage;
-    int choice;
-
+    short int i, pos, j, n, ch;
     cout<<"************************************************\n";
-    cout<<"     STUDENT RECORD MANAGEMENT SYSTEM\n";
-    cout<<"************************************************\n\n";
+    cout<<"\tSTUDENT RECORD MANAGEMENT SYSTEM\n";
+    cout<<"************************************************\n";
 
-    n_s : cout<<"Enter Number Of Students : ";
-    cin>>num_stu;
-    if (num_stu < 1 || num_stu > 10){
-    cout<<"Number of students must be between 1 and 10.\n";
-    goto n_s;
-    }
+    cout<<"Enter Number of Students : ";
+    cin>>n;
+    char id[100][8], name[100][10], grade[100][3], id_search[1][8];
+    float per[100];
+    bool found=false;
 
-    cout<<"\nEnter Student Details\n\n";
-    for (int i=0; i<num_stu; i++){
-        cout<<left<<setw(20)<<"Enter Enrollment ID"<<": ";
-        cin>>id[i];
-        cout<<setw(20)<<"Enter Your Name"<<": ";
-        cin.ignore();
-        getline(cin, name[i]);
-        cout<<setw(20)<<"Enter Percentage"<<": ";
-        cin>>percentage[i];
-        if (percentage[i]>=90){
-            grade[i] = "O";
+    cout<<"\n\nEnter Student Details\n\n";
+    cin.ignore();
+    for (i=0; i<n; i++){
+        cout<<left<<setw(20)<<"Enter Enrollment ID"<<" : ";
+        cin.getline(id[i], 8);
+        cout<<setw(20)<<"Enter Name"<<" : ";
+        cin.getline(name[i], 10);
+        cout<<setw(20)<<"Enter Percentage"<<" : ";
+        cin>>per[i];
+
+        if (per[i]>=90){
+            grade[i][0] = 'O';
+            grade[i][1] = '\0';
         }
-        else if (percentage[i]>=80){
-            grade[i] = "A+";
+        else if (per[i]>=80){
+            grade[i][0] = 'A';
+            grade[i][1] = '+';
+            grade[i][2] = '\0';
         }
-        else if (percentage[i]>=70){
-            grade[i] = "A";
+        else if (per[i]>=70){
+            grade[i][0] = 'A';
+            grade[i][1] = '\0';
         }
-        else if (percentage[i]>=60){
-            grade[i] = "B+";
+        else if (per[i]>=60){
+            grade[i][0] = 'B';
+            grade[i][1] = '+';
+            grade[i][2] = '\0';
         }
-        else if (percentage[i]>=50){
-           grade[i] = "B";
+        else if (per[i]>=50){
+            grade[i][0] = 'B';
+            grade[i][1] = '\0';
         }
-        else if (percentage[i]>=40){
-            grade[i] = "C";
+        else if (per[i]>=40){
+            grade[i][0] = 'C';
+            grade[i][1] = '\0';
         }
-        else if (percentage[i]<40){
-            grade[i] = "F";
+        else {
+            grade[i][0] = 'F';
+            grade[i][1] = '\0';
         }
-        // cout<<setw(20)<<"Enter Grade"<<": ";
-        // cin>>grade[i];
+
         cout<<endl;
+        cin.ignore();
     }
-
-    cout<<"\n------------------------------------------------\n";
+    cout<<"\n\n--------------------------------------------\n";
     cout<<"Current Student Records\n\n";
-    for (int i=0; i<num_stu; i++){
-        cout<<setw(10)<<id[i];
-        cout<<setw(15)<<name[i];
-        cout<<setw(4)<<percentage[i];
-        cout<<grade[i];
-        cout<<endl;
+    for (i=0; i<n; i++){
+        cout<<left<<setw(10)<<id[i]<<setw(12)<<name[i]<<setw(5)<<per[i]<<setw(3)<<grade[i]<<endl;
     }
-    cout<<"\n------------------------------------------------\n\n";
-
-    m : cout<<"---------------------MENU----------------------\n\n\n";
-
-    cout<<"1. Insert New Student\n2. Update Student Records\n3. Delete Student Record\n4. Exit\n\n";
-
-    cout<<"Enter Your Choice : ";
-    cin>>choice;
-    switch(choice)
-    {
-    case 1:
-        p1 : cout<<"Enter Position : ";
-        cin>>position;
-        if (position < 1 || position > num_stu + 1){
-            cout<<"Invalid Position!\n";
-            goto p1;
-        }
-        position--;
-        for (int i = num_stu; i > position; i--) {
-            id[i] = id[i - 1];
-            name[i] = name[i - 1];
-            grade[i] = grade[i - 1];
-            percentage[i] = percentage[i - 1];
-        }
-
-        cout<<left<<setw(20)<<"Enter Enrollment ID"<<": ";
-        cin>>id[position];
-        cout<<setw(20)<<"Enter Your Name"<<": ";
-        cin.ignore();
-        getline(cin, name[position]);
-        cout<<setw(20)<<"Enter Percentage"<<": ";
-        cin>>percentage[position];
-        // cout<<setw(20)<<"Enter Grade"<<": ";
-        if (percentage[position]>=90){
-            grade[position] = "O";
-        }
-        else if (percentage[position]>=80){
-            grade[position] = "A+";
-        }
-        else if (percentage[position]>=70){
-            grade[position] = "A";
-        }
-        else if (percentage[position]>=60){
-            grade[position] = "B+";
-        }
-        else if (percentage[position]>=50){
-           grade[position] = "B";
-        }
-        else if (percentage[position]>=40){
-            grade[position] = "C";
-        }
-        else if (percentage[position]<40){
-            grade[position] = "F";
-        }
-        num_stu++;
-        cout<<endl;
-        cout<<endl;
-        cout<<"Record Inserted Successfully.";
-        
-        cout<<endl;
-        cout<<"\n------------------------------------------------\n";
-        cout<<"Updated Student Record\n\n";
-        for (int i=0; i<num_stu; i++){
-            cout<<setw(10)<<id[i];
-            cout<<setw(15)<<name[i];
-            cout<<setw(6)<<percentage[i];
-            cout<<grade[i];
-            cout<<endl;
-        }
-        cout<<"\n------------------------------------------------\n\n";
-        goto m;
-
-    case 2:
-        cout<<"\n\n------------------------------------------------\n";
-        cout<<"Update Student Record\n\n";
-        cout<<"Enter Enrollment Number : ";
-        cin>>id_temp;
-        for (i=0; i<num_stu; i++){
-            if (id[i]==id_temp){
-                break;
-            }
-        }
-        cout<<"Enter New Percentage : ";
-        cin>>updated_percentage;
-        percentage[i] = updated_percentage;
-        // cout<<"Enter New Grade : ";
-        // cin>>updated_grade;
-        
-        // grade[i] = updated_grade;
-        if (percentage[i]>=90){
-            grade[i] = "O";
-        }
-        else if (percentage[i]>=80){
-            grade[i] = "A+";
-        }
-        else if (percentage[i]>=70){
-            grade[i] = "A";
-        }
-        else if (percentage[i]>=60){
-            grade[i] = "B+";
-        }
-        else if (percentage[i]>=50){
-           grade[i] = "B";
-        }
-        else if (percentage[i]>=40){
-            grade[i] = "C";
-        }
-        else if (percentage[i]<40){
-            grade[i] = "F";
-        }
-
-        cout<<endl;
-        cout<<endl;
-        cout<<"Record Updated Successfully.";
-        
-        cout<<endl;
-        cout<<"\n------------------------------------------------\n";
-        cout<<"Updated Student Record\n\n";
-        for (int i=0; i<num_stu; i++){
-            cout<<setw(10)<<id[i];
-            cout<<setw(15)<<name[i];
-            cout<<setw(6)<<percentage[i];
-            cout<<grade[i];
-            cout<<endl;
-        }
-        cout<<"\n------------------------------------------------\n\n";
-        goto m;
+    cout<<"\n\n--------------------------------------------\n";
     
-
-
-    case 3:
-        cout<<"\nDelete Student Record";
-
-        p2 : cout<<"\n\nEnter Position : ";
-        cin>>position;
-        if (position < 1 || position > num_stu){
-            cout<<"Invalid Position!\n";
-            goto p2;
-        }
-        position--;
-        for (int i = position; i < num_stu - 1; i++) {
-            id[i] = id[i+1];
-            name[i] = name[i+1];
-            grade[i] = grade[i+1];
-            percentage[i] = percentage[i+1];
-        }
-        num_stu--;
-
-        cout<<endl;
-        cout<<"Record Deleted Successfully.";
-        cout<<endl;
-
-        cout<<"\n------------------------------------------------\n";
-        cout<<"Final Student Records\n\n";
-
-        for (int i = 0; i < num_stu; i++) {
-            cout<<setw(10)<<id[i];
-            cout<<setw(15)<<name[i];
-            cout<<setw(6)<<percentage[i];
-            cout<<grade[i];
+    m : cout<<"1. Insert New Student\n2. Update Student Details\n3. Delete Student Record\n4. Exit\n\n";
+    cout<<"Enter your choice : ";
+    cin>>ch;
+    switch(ch){
+        case 1:
+            n++;                        
+            cout<<"\nEnter position : ";
+            cin>>pos;
             cout<<endl;
+
+            for (i=n-1; i>=pos; i--){
+                for(j=0; j<8; j++){
+                    id[i][j] = id[i-1][j];
+                }
+                for(j=0; j<10; j++){
+                    name[i][j] = name[i-1][j];
+                }
+                for(j=0; j<3; j++){
+                    grade[i][j] = grade[i-1][j];
+                }
+                per[i] = per[i-1];
+            }
+            cout<<endl;
+            cin.ignore();
+            cout<<left<<setw(20)<<"Enter Enrollment ID"<<" : ";
+            cin.getline(id[pos-1], 8);
+            cout<<setw(20)<<"Enter Name"<<" : ";
+            cin.getline(name[pos-1], 10);
+            cout<<setw(20)<<"Enter Percentage"<<" : ";
+            cin>>per[pos-1];
+            cin.ignore();
+            
+            if (per[pos-1]>=90){
+                grade[pos-1][0] = 'O';
+                grade[pos-1][1] = '\0';
+            }
+            else if (per[pos-1]>=80){
+                grade[pos-1][0] = 'A';
+                grade[pos-1][1] = '+';
+                grade[pos-1][2] = '\0';
+            }
+            else if (per[pos-1]>=70){
+                grade[pos-1][0] = 'A';
+                grade[pos-1][1] = '\0';
+            }
+            else if (per[pos-1]>=60){
+                grade[pos-1][0] = 'B';
+                grade[pos-1][1] = '+';
+                grade[pos-1][2] = '\0';
+            }
+            else if (per[pos-1]>=50){
+                grade[pos-1][0] = 'B';
+                grade[pos-1][1] = '\0';
+            }
+            else if (per[pos-1]>=40){
+                grade[pos-1][0] = 'C';
+                grade[pos-1][1] = '\0';
+            }
+            else {
+                grade[pos-1][0] = 'F';
+                grade[pos-1][1] = '\0';
+            }
+
+            for (i=0; i<n; i++){            
+                cout<<id[i]<<" ";
+            }
+            cout<<endl<<endl;
+            cout<<"\nRecord Inserted Successfully.\n\n";
+
+            cout<<"\n\n--------------------------------------------\n";
+            cout<<"Updated Student Records\n\n";
+            for (i=0; i<n; i++){
+                cout<<left<<setw(10)<<id[i]<<setw(12)<<name[i]<<setw(5)<<per[i]<<setw(3)<<grade[i]<<endl;
+            }
+            cout<<"\n\n--------------------------------------------\n";
+            goto m;
+
+        case 2 :
+            n : cout<<"\nEnter Enrollment ID : ";
+            cin.ignore();
+            cin.getline(id_search[0], 8);
+
+            for (i=0; i<n; i++){
+                for (j=0; j<7; j++){
+                    if (id[i][j] != id_search[0][j]){
+                        break;
+                    }
+                    else {
+                        if (j==6){
+                            j=i;
+                            i=n;
+                            found = true;
+                            break;
+                        }
+                    }
+                }
+            }   
+            
+            if (found==false) {
+                cout<<"\nEnrollment ID not found!\n";
+                goto n;
+            }
+            else {
+                cout<<"\nEnter New Percentage : ";
+                cin>>per[j];
+
+                if (per[j]>=90){
+                    grade[j][0] = 'O';
+                    grade[j][1] = '\0';
+                }
+                else if (per[j]>=80){
+                    grade[j][0] = 'A';
+                    grade[j][1] = '+';
+                    grade[j][2] = '\0';
+                }
+                else if (per[j]>=70){
+                    grade[j][0] = 'A';
+                    grade[j][1] = '\0';
+                }
+                else if (per[j]>=60){
+                    grade[j][0] = 'B';
+                    grade[j][1] = '+';
+                    grade[j][2] = '\0';
+                }
+                else if (per[j]>=50){
+                    grade[j][0] = 'B';
+                    grade[j][1] = '\0';
+                }
+                else if (per[j]>=40){
+                    grade[j][0] = 'C';
+                    grade[j][1] = '\0';
+                }
+                else {
+                    grade[j][0] = 'F';
+                    grade[j][1] = '\0';
+                }
+            }
+            cout<<"\nRecord Updated Successfully.\n\n";
+            cout<<"\n\n--------------------------------------------\n";
+            cout<<"Updated Student Records\n\n";
+            for (i=0; i<n; i++){
+                cout<<left<<setw(10)<<id[i]<<setw(12)<<name[i]<<setw(5)<<per[i]<<setw(3)<<grade[i]<<endl;
+            }
+            cout<<endl;
+            goto m;
+        case 3 :
+            cout<<"Enter position : ";
+            cin>>pos;
+            cout<<endl<<endl;
+
+            for (i=pos-1; i<n-1; i++){
+                for (j=0; j<8; j++){
+                    id[i][j] = id[i+1][j];
+                }
+                for (j=0; j<10; j++){
+                    name[i][j] = name[i+1][j];
+                }
+                for (j=0; j<3; j++){
+                    grade[i][j] = grade[i+1][j];
+                }
+                per[i] = per[i+1];
+            }
+            n--;
+            cout<<"\nRecord Deleted Successfully.\n\n";
+
+            cout<<"\n\n--------------------------------------------\n";
+            cout<<"Updated Student Records\n\n";
+            for (i=0; i<n; i++){
+                cout<<left<<setw(10)<<id[i]<<setw(12)<<name[i]<<setw(5)<<per[i]<<setw(3)<<grade[i]<<endl;
+            }
+            cout<<endl;
+            goto m;
+
+        case 4 :
+            cout<<"\nThank You!\n";
+            return 0;
         }
-
-        cout<<"\n------------------------------------------------\n\n";
-
-        goto m;
-
-    case 4:
-        cout<<"Thank You...";
-        exit(0);
-    default:
-        cout<<"\nInvalid Choice!\n\n";
-        goto m;
-    }
-
-
 }
-
-
-
-
